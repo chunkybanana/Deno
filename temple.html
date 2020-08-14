@@ -14,12 +14,15 @@
     <canvas id="canvas"></canvas>
     <button onclick="openFullscreen()">Fullscreen</button>
     <script>
+        //checks whehter inventory open
+        var invopen = true;
         //arrow stuff
         var arrowangle;
         var arrowinflight = false;
         var arrow;
         var arrowcounter;
-        var arrows = 1;
+        var arrows = 10;
+        var arrowlaunchroom;
         //xmin, ymin, xmax, ymax
         var arrowhits = [];
         //switch trackers
@@ -55,6 +58,7 @@
         var myGamePiece;
         var sword;
         var bow;
+        var enemies = [];
         //Skyfall play function 
         function play() {
             //reset score
@@ -228,7 +232,7 @@
             
         }
 
-        //collide with platforms,
+        //collide with platforms
         function platformcollide(xdraw, xdraw2, ydraw) {
             if (myGamePiece.x >= xdraw - 30 && myGamePiece.x <= xdraw2 + 30 && myGamePiece.y >= ydraw - 50 && myGamePiece.y <= ydraw - 30) {
                 myGamePiece.y = ydraw - 50;
@@ -264,7 +268,7 @@
                 myGamePiece.gravitySpeed = 0;
             }
         }
-        //go through doors
+        //go through doors  
         function generalwall() {
             
             if (myGamePiece.x >= 930) {
@@ -412,7 +416,7 @@
                 
             }
             //skyfall
-            if (level == 2.5) {
+            if (level == 2.5 && !invopen) {
                 //background
                  bg("skyfallback.png");
                 //reset values
@@ -584,7 +588,7 @@
                 }
             }
            
-            
+            if(level == Math.floor(level)){
             //Z, change weapon. Note: this updates 50 times per second, so toggleable things are complicated. I have fixed this by waiting for 20 iterations (0.4 seconds) before it changes. 
             if (myGameArea.keys && (myGameArea.keys[122] || myGameArea.keys[90])) {
                     console.log("2")
@@ -619,12 +623,12 @@
                 
                 bow.update();
                 //if you have arrows
-                if(arrows >= 0){
+                if(arrows >= 1|| (arrowinflight && arrows == 0)){
                     arrow.update();
                 }
             }
-                            //SPACE pressed, use weapon   
-                            if (myGameArea.keys && myGameArea.keys[32]) {
+                            //SPACE pressed, use weapon      
+                            if (myGameArea.keys && myGameArea.keys[32] && !invopen) {
                                 //sword
                                 if(activeweapon == 0){
                                     //set image, go to player  
@@ -654,31 +658,36 @@
                                     arrowinflight = true;
                                     arrowcounter = 0;
                                     arrows -= 1;
+                                    arrowlaunchroom = level;
                                 }
                                
                             }
             
-            if (arrowinflight) {
+            if (arrowinflight && !invopen) {
                 //count time, used for quadratic flight path  
                 arrowcounter += 0.02;
                 //move along horizontally
                 arrow.x += (Math.sin(arrowangle + Math.PI/2)) * 10;
                 //move vertically, then subtract time in air 
                 arrow.y += -10*(Math.cos(arrowangle + Math.PI/2)) + 10*(arrowcounter ** 2);
-                //aim
+                //aim  
                 arrow.angle = Math.atan2(-10*(Math.cos(arrowangle + Math.PI/2)) + 10*(arrowcounter ** 2),(Math.sin(arrowangle + Math.PI/2)) * 10)
                 //when hits ground, stop flying
                 arrowhits[0]= arrow.x;
                 arrowhits[1]= arrow.y;
-                arrowhits[2]= arrow.x + 75*Math.sin(arrow.angle - Math.PI/2);
-                arrowhits[3]= arrow.y + 75*Math.sin(arrow.angle - Math.PI/2);
-                if (arrowhits[2] >= 960 || arrowhits[3] <= 0 || arrowhits[2] <= 0 || arrowhits[3] >= 540) {
+                arrowhits[2]= arrow.x - 75 * Math.sin(arrow.angle - Math.PI/2);
+                arrowhits[3]= arrow.y + 75 * Math.cos(arrow.angle - Math.PI/2);
+                console.log(arrowlaunchroom,level)
+                if (arrowhits[2] >= 898 || arrowhits[3] <= 62 || arrowhits[2] <= 62 || arrowhits[3] >= 478 || arrowlaunchroom != level) {
                     arrowinflight = false;
                 }
+                
             }
             //inventory open
             if (myGameArea.keys && (myGameArea.keys[114] || myGameArea.keys[82])) {
-                //change bow   
+                invopen = true;
+                //change bow
+
                 if (myGameArea.keys && myGameArea.keys[51]) {
                     console.log("2")
                     counts[2] += 1;
@@ -729,28 +738,29 @@
 
             } else {
                 // otherwise update player
-                     
+                     invopen = false;
                   
             
                 myGamePiece.newPos();
             myGamePiece.update();
                 
                 }
+                }
         }
      
      
-       //accelerate function
+       //accelerate function 
         function accelerate(n) {
             myGamePiece.gravity = n;
         }
-        //background function
+        //background function 
         function bg(x) {
              var cx = myGameArea.context;
                 var xpolink = new Image();
                 xpolink.src = x;
                 cx.drawImage(xpolink,0,0,960,540);
         }
-        //necessary for setTimeout() so textpuffs disappear. 
+        //necessary for setTimeout() so textpuffs disappear.   
         function textpuff(x) {
            text = x;
         }
