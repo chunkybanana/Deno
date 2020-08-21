@@ -40,8 +40,8 @@
         var activeweapon = 0;
         var activecounter = 0;
         //png lists
-        var bowpngs = ["", "woodenbow.png"];
-        var swordpngs = ["", "woodensword.png", "stonesword.png"];
+        var bowpngs = ["", "imgs/weapons/woodenbow.png"];
+        var swordpngs = ["", "imgs/weapons/woodensword.png", "imgs/weapons/stonesword.png"];
 
         // item lists
         var swords = ["None","Wooden Sword 1"];
@@ -100,20 +100,20 @@
         //function that starts game
         function startGame() {
             //set components
-             sword = new component(240,30,"woodensword.png",0,0,"image");
+            sword = new component(240, 30,"imgs/weapons/woodensword.png",0,0,"image");
              sword.angle = Math.PI/-2;
-             arrow = new component(150,7.5,"arrow.png",0,0,"image");
-             bow  = new component(120,60,"woodenbow.png",0,0,"image")
-             myObstacle1 = new component(60, 60, "fireball.png", 0, 0, "image");
+            arrow = new component(150, 7.5,"imgs/weapons/arrow.png",0,0,"image");
+            bow = new component(120, 60,"imgs/weapons/woodenbow.png",0,0,"image")
+            myObstacle1 = new component(60, 60, "imgs/skyfall/fireball.png", 0, 0, "image");
 
-                        myObstacle2 = new component(60, 60, "fireball.png", 0, 0, "image");
-                        myObstacle3 = new component(60, 60, "fireball.png", 0, 0, "image");
-                        myObstacle4 = new component(60, 60, "fireball.png", 0, 0, "image");
-                        myObstacle5 = new component(60, 60, "fireball.png", 0, 0, "image");
+            myObstacle2 = new component(60, 60, "imgs/skyfall/fireball.png", 0, 0, "image");
+            myObstacle3 = new component(60, 60, "imgs/skyfall/fireball.png", 0, 0, "image");
+            myObstacle4 = new component(60, 60, "imgs/skyfall/fireball.png", 0, 0, "image");
+            myObstacle5 = new component(60, 60, "imgs/skyfall/fireball.png", 0, 0, "image");
 
-            myCoin = new component(60, 60, "coin.png", 0, 0, "image");
+            myCoin = new component(60, 60, "imgs/skyfall/coin.png", 0, 0, "image");
 
-            myGamePiece = new component(60, 60, "player.png", 160, 440, "image");
+            myGamePiece = new component(60, 60, "imgs/playerandenemy/player.png", 160, 440, "image");
             myGamePiece.health = 10;
             //start 
             myGameArea.start();
@@ -248,8 +248,8 @@
         }
         //key check function
         function keycheck() {
-            if (myGameArea.keys && myGameArea.keys[37]) { myGamePiece.speedX = -4; myGamePiece.dir = "l"; myGamePiece.image.src = "playerleft.png";}
-            else if (myGameArea.keys && myGameArea.keys[39]) { myGamePiece.speedX = 4;  myGamePiece.dir = "r"; myGamePiece.image.src = "playerright.png";} 
+            if (myGameArea.keys && myGameArea.keys[37]) { myGamePiece.speedX = -4; myGamePiece.dir = "l"; myGamePiece.image.src = "imgs/playerandenemy/playerleft.png";}
+            else if (myGameArea.keys && myGameArea.keys[39]) { myGamePiece.speedX = 4; myGamePiece.dir = "r"; myGamePiece.image.src = "imgs/playerandenemy/playerright.png";} 
             
         }
 
@@ -639,8 +639,8 @@
                 bg("backgrounds/l4.png");
                 if(!invopen){
                 if(!l4){
-                enemies[0]= new component(60,60,"enemy.png",330,448,"image");
-                    enemyhealth[0] = new component(60,10, "fullhealth.png" ,330, 408, "image");
+                    enemies[0] = new component(60, 60,"imgs/playerandenemy/enemy.png",330,448,"image");
+                    enemyhealth[0] = new component(60, 10, "imgs/health/fullhealth.png" ,330, 408, "image");
                     enemies[0].speedX = 4;
                     enemies[0].health = 8;
                     enemies[0].origh = 8;
@@ -659,9 +659,9 @@
                         myGamePiece.x += (1.1 ** myGamePiece.kb) * 25/(1.1 ** 12) * myGamePiece.kbd;
                         myGamePiece.kb -= 1;
                         if(myGamePiece.kb > 1){
-                        myGamePiece.image.src = "playerdamaged.png";
+                            myGamePiece.image.src = "imgs/playerandenemy/playerdamaged.png";
                         } else {
-                            myGamePiece.image.src = "player.png";
+                            myGamePiece.image.src = "imgs/playerandenemy/player.png";
                         }
                     }
 
@@ -702,8 +702,8 @@
                 bg("backgrounds/l4.png");
                 if (!invopen) {
                     if (!l5) {
-                        enemies[0] = new component(60, 60, "enemy.png", 330, 448, "image");
-                        enemyhealth[0] = new component(60, 10, "fullhealth.png", 330, 408, "image");
+                        enemies[0] = new component(60, 60, "imgs/playerandenemy/enemy.png", 330, 448, "image");
+                        enemyhealth[0] = new component(60, 10, "imgs/health/fullhealth.png", 330, 408, "image");
                         enemies[0].speedX = 0;
                         enemies[0].health = 300;
                         enemies[0].origh = 300;
@@ -722,9 +722,9 @@
                         myGamePiece.x += (1.1 ** myGamePiece.kb) * 25 / (1.1 ** 12) * myGamePiece.kbd;
                         myGamePiece.kb -= 1;
                         if (myGamePiece.kb > 1) {
-                            myGamePiece.image.src = "playerdamaged.png";
+                            myGamePiece.image.src = "imgs/playerandenemy/playerdamaged.png";
                         } else {
-                            myGamePiece.image.src = "player.png";
+                            myGamePiece.image.src = "imgs/playerandenemy/player.png";
                         }
                     }
 
@@ -738,28 +738,28 @@
             for (var i = 0; i < enemies.length; i++) {
                 if (enemies[i].health > 0 && enemies[i].spawnroom == level) {
                     if (enemies[i].health <= enemies[i].origh / 8) {
-                        enemyhealth[i].image.src = "eighthhealth.png";
+                        enemyhealth[i].image.src = "imgs/health/eighthhealth.png";
                     }
                     if (enemies[i].health <= enemies[i].origh / 4 && enemies[i].health > enemies[i].origh / 8) {
-                        enemyhealth[i].image.src = "quarterhealth.png";
+                        enemyhealth[i].image.src = "imgs/health/quarterhealth.png";
                     }
                     if (enemies[i].health <= 3 * enemies[i].origh / 8 && enemies[i].health > enemies[i].origh / 4) {
-                        enemyhealth[i].image.src = "threeeighthhealth.png";
+                        enemyhealth[i].image.src = "imgs/health/threeeighthhealth.png";
                     }
                     if (enemies[i].health <= enemies[i].origh / 2 && enemies[i].health > 3 * enemies[i].origh / 8) {
-                        enemyhealth[i].image.src = "halfhealth.png";
+                        enemyhealth[i].image.src = "imgs/health/halfhealth.png";
                     }
                     if (enemies[i].health <= 5 * enemies[i].origh / 8 && enemies[i].health > enemies[i].origh / 2) {
-                        enemyhealth[i].image.src = "fiveeighthhealth.png";
+                        enemyhealth[i].image.src = "imgs/health/fiveeighthhealth.png";
                     }
                     if (enemies[i].health <= 3 * enemies[i].origh / 4 && enemies[i].health > 5 * enemies[i].origh / 8) {
-                        enemyhealth[i].image.src = "threequarterhealth.png";
+                        enemyhealth[i].image.src = "imgs/health/threequarterhealth.png";
                     }
                     if (enemies[i].health <= 7 * enemies[i].origh / 8 && enemies[i].health > 3 * enemies[i].origh / 4) {
-                        enemyhealth[i].image.src = "seveneighthhealth.png";
+                        enemyhealth[i].image.src = "imgs/health/seveneighthhealth.png";
                     }
                     if (enemies[i].health <= enemies[i].origh && enemies[i].health > 7 * enemies[i].origh / 8) {
-                        enemyhealth[i].image.src = "fullhealth.png";
+                        enemyhealth[i].image.src = "imgs/health/fullhealth.png";
                     }
                     enemies[i].newPos();
                     enemyhealth[i].x = enemies[i].x;
@@ -789,7 +789,7 @@
                 myGameArea.context.fillRect(0, 0, 31 * myGamePiece.health + 31, 62);
                 for (var x = 0; x < myGamePiece.health; x++) {
                     var img = new Image();
-                    img.src = "heart.png";
+                    img.src = "imgs/health/heart.png";
                     
                     myGameArea.context.drawImage(img, 31 * x +15, 15, 29, 29);
                 }
@@ -823,9 +823,9 @@
                         enemies[q].x += (1.1 ** enemies[q].kb) * 25/(1.1 ** 12) * enemies[q].kbd;
                         enemies[q].kb -= 1;
                         if(enemies[q].kb > 1){
-                        enemies[q].image.src = "enemydamaged.png";
+                            enemies[q].image.src = "imgs/playerandenemy/enemydamaged.png";
                         } else {
-                            enemies[q].image.src = "enemy.png";
+                            enemies[q].image.src = "imgs/playerandenemy/enemy.png";
                         }
                     }
                     }
