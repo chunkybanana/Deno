@@ -6,7 +6,7 @@
 
         canvas {
             border: 1px solid #d3d3d3;
-            background-color: #f1f1f1;
+            background-color: #f1f1f1; 
         }
     </style>
 </head>
@@ -14,6 +14,16 @@
     <canvas id="canvas"></canvas>
     <button onclick="openFullscreen()">Fullscreen</button>
     <script>
+        //array prototype clear fuunction for arrays
+
+        Array.prototype.czlear = function() {
+  var i;
+  for (i = 0; i < this.length; i++) {
+    this[i] = null;
+  }
+        };
+        var l4 = false;
+        var l5 = false;
         //checks whehter inventory open
         var invopen = true;
         //arrow stuff
@@ -21,7 +31,7 @@
         var arrowinflight = false;
         var arrow;
         var arrowcounter;
-        var arrows = 10;
+        var arrows = 100;
         var arrowlaunchroom;
         //xmin, ymin, xmax, ymax
         var arrowhits = [];
@@ -42,6 +52,8 @@
         var chestplates = ["None"];
         var throws = ["None"];
         //trackers
+        var sworddmgs = [0, 1, 2];
+
 
         var itemindex = [0,1,1,0,0,0,0];
         var equipped = ["None","Wooden Sword 1","Wooden Bow 1","None","None","None","None","None"];
@@ -59,6 +71,8 @@
         var sword;
         var bow;
         var enemies = [];
+        var enemyhealth = [];
+        var enemydarts = [];
         //Skyfall play function 
         function play() {
             //reset score
@@ -81,7 +95,7 @@
            
         }
         //level/room/area/whatever
-        var level = 1;
+        var level = 3;
 
         //function that starts game
         function startGame() {
@@ -100,7 +114,7 @@
             myCoin = new component(60, 60, "coin.png", 0, 0, "image");
 
             myGamePiece = new component(60, 60, "player.png", 160, 440, "image");
-
+            myGamePiece.health = 10;
             //start 
             myGameArea.start();
 
@@ -144,7 +158,7 @@
                 this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
             }
         }
-        //fullscreen
+        //fullscreen 
                 var elem;
         elem = myGameArea.canvas;
 
@@ -168,6 +182,7 @@
                     this.image.src = color;
                 }
             //presets
+            
             this.angle = 0;
             this.width = width;
             this.height = height;
@@ -177,8 +192,14 @@
             this.speedY = 0;
             this.gravity = 0.05;
             this.gravitySpeed = 0;
-            //my addition, also a preset
+            //my addition, also presets
             this.dir = "l";
+            this.health = 3;
+            this.origh = 3;
+            this.kb = 0;
+            this.kbd = 0;
+            this.dropgold = 0;
+            this.spawnroom = 1;
             //update function, draws component when called on: rotate, translate and restore are part of rotatable components. 
             this.update = function () {
                  ctx = myGameArea.context;
@@ -423,8 +444,8 @@
                 myGamePiece.speedX = 0;
             myGamePiece.speedY = 0;
                 //keycheck
-            if (myGameArea.keys && myGameArea.keys[37]) { myGamePiece.speedX = -4; }
-            if (myGameArea.keys && myGameArea.keys[39]) { myGamePiece.speedX = 4; }
+            if (myGameArea.keys && myGameArea.keys[37]) { myGamePiece.speedX = -8; }
+            if (myGameArea.keys && myGameArea.keys[39]) { myGamePiece.speedX = 8; }
 // move obstacles
             if (myObstacle1.y >= 430) {
                 myObstacle1.x = (Math.random() * 776) + 92;
@@ -587,7 +608,167 @@
                    }
                 }
             }
-           
+
+            if (level == 4) {
+                
+                //key check l/r
+                keycheck();
+                //jump
+                if (myGameArea.keys && myGameArea.keys[38]) {
+                    //only if touching bottom
+                    if (myGamePiece.y >= 448) {
+                        //jump
+                        accelerate(-5);
+                    } else {
+                        //gravity  
+                        accelerate(0.1)
+
+                    }
+                } else {
+                    //gravity 
+                    accelerate(0.1)
+                }
+                // move throuugh levels
+                generalwall();
+                //walls
+                wallcollide(42,0,358);
+                platformcollide(0,62,338);
+                wallcollide(918,0,358);
+                platformcollide(898,960,338);
+                //background
+                bg("l4.png");
+                if(!invopen){
+                if(!l4){
+                enemies[0]= new component(60,60,"enemy.png",330,448,"image");
+                    enemyhealth[0] = new component(60,10, "fullhealth.png" ,330, 408, "image");
+                    enemies[0].speedX = 4;
+                    enemies[0].health = 8;
+                    enemies[0].origh = 8;
+                    enemies[0].dropgold = 5;
+                    enemies[0].spawnroom = 4;
+                }
+                if (enemies[0].x >= 800) {
+                    enemies[0].speedX = -4;
+                    
+                } else if(enemies[0].x <= 200){
+                    enemies[0].speedX = 4;
+              }
+                    
+               
+                    if (myGamePiece.kb > 0) {
+                        myGamePiece.x += (1.1 ** myGamePiece.kb) * 25/(1.1 ** 12) * myGamePiece.kbd;
+                        myGamePiece.kb -= 1;
+                        if(myGamePiece.kb > 1){
+                        myGamePiece.image.src = "playerdamaged.png";
+                        } else {
+                            myGamePiece.image.src = "player.png";
+                        }
+                    }
+
+                     
+                
+                
+                l4 = true;
+}
+            }
+
+            if (level == 5) {
+
+                //key check l/r
+                keycheck();
+                //jump
+                if (myGameArea.keys && myGameArea.keys[38]) {
+                    //only if touching bottom
+                    if (myGamePiece.y >= 448) {
+                        //jump
+                        accelerate(-5);
+                    } else {
+                        //gravity  
+                        accelerate(0.1)
+
+                    }
+                } else {
+                    //gravity 
+                    accelerate(0.1)
+                }
+                // move throuugh levels
+                generalwall();
+                //walls
+                wallcollide(42, 0, 358);
+                platformcollide(0, 62, 338);
+                wallcollide(918, 0, 358);
+                platformcollide(898, 960, 338);
+                //background
+                bg("l4.png");
+                if (!invopen) {
+                    if (!l5) {
+                        enemies[0] = new component(60, 60, "enemy.png", 330, 448, "image");
+                        enemyhealth[0] = new component(60, 10, "fullhealth.png", 330, 408, "image");
+                        enemies[0].speedX = 0;
+                        enemies[0].health = 300;
+                        enemies[0].origh = 300;
+                        enemies[0].dropgold = 5;
+                        enemies[0].spawnroom = 5;
+                    }
+                    if (enemies[0].x >= 800) {
+                        enemies[0].speedX = -4;
+
+                    } else if (enemies[0].x <= 200) {
+                        enemies[0].speedX = 4;
+                    }
+
+
+                    if (myGamePiece.kb > 0) {
+                        myGamePiece.x += (1.1 ** myGamePiece.kb) * 25 / (1.1 ** 12) * myGamePiece.kbd;
+                        myGamePiece.kb -= 1;
+                        if (myGamePiece.kb > 1) {
+                            myGamePiece.image.src = "playerdamaged.png";
+                        } else {
+                            myGamePiece.image.src = "player.png";
+                        }
+                    }
+
+
+
+
+                    l5 = true;
+                }
+            }
+
+            for (var i = 0; i < enemies.length; i++) {
+                if (enemies[i].health > 0 && enemies[i].spawnroom == level) {
+                    if (enemies[i].health <= enemies[i].origh / 8) {
+                        enemyhealth[i].image.src = "eighthhealth.png";
+                    }
+                    if (enemies[i].health <= enemies[i].origh / 4 && enemies[i].health > enemies[i].origh / 8) {
+                        enemyhealth[i].image.src = "quarterhealth.png";
+                    }
+                    if (enemies[i].health <= 3 * enemies[i].origh / 8 && enemies[i].health > enemies[i].origh / 4) {
+                        enemyhealth[i].image.src = "threeeighthhealth.png";
+                    }
+                    if (enemies[i].health <= enemies[i].origh / 2 && enemies[i].health > 3 * enemies[i].origh / 8) {
+                        enemyhealth[i].image.src = "halfhealth.png";
+                    }
+                    if (enemies[i].health <= 5 * enemies[i].origh / 8 && enemies[i].health > enemies[i].origh / 2) {
+                        enemyhealth[i].image.src = "fiveeighthhealth.png";
+                    }
+                    if (enemies[i].health <= 3 * enemies[i].origh / 4 && enemies[i].health > 5 * enemies[i].origh / 8) {
+                        enemyhealth[i].image.src = "threequarterhealth.png";
+                    }
+                    if (enemies[i].health <= 7 * enemies[i].origh / 8 && enemies[i].health > 3 * enemies[i].origh / 4) {
+                        enemyhealth[i].image.src = "seveneighthhealth.png";
+                    }
+                    if (enemies[i].health <= enemies[i].origh && enemies[i].health > 7 * enemies[i].origh / 8) {
+                        enemyhealth[i].image.src = "fullhealth.png";
+                    }
+                    enemies[i].newPos();
+                    enemyhealth[i].x = enemies[i].x;
+                    enemyhealth[i].y = enemies[i].y - 40;
+                    enemies[i].update();
+                    enemyhealth[i].update();
+                }
+            }
+
             if(level == Math.floor(level)){
             //Z, change weapon. Note: this updates 50 times per second, so toggleable things are complicated. I have fixed this by waiting for 20 iterations (0.4 seconds) before it changes. 
             if (myGameArea.keys && (myGameArea.keys[122] || myGameArea.keys[90])) {
@@ -601,18 +782,27 @@
                         }
                     }
                 }
-            //text
+            
+            
+                //update bow
+                myGameArea.context.fillStyle = "black"
+                myGameArea.context.fillRect(0, 0, 31 * myGamePiece.health + 31, 62);
+                for (var x = 0; x < myGamePiece.health; x++) {
+                    var img = new Image();
+                    img.src = "heart.png";
+                    
+                    myGameArea.context.drawImage(img, 31 * x +15, 15, 29, 29);
+                }
+                //text
             var cx = myGameArea.context;
             cx.fillStyle = "white";
-            cx.font = "30px Arial";
-            cx.fillText(text,240,30);
-            //update bow
-
+                cx.font = "30px Arial";
+                cx.fillText(text, 240, 30);
             bow.x = myGamePiece.x;
             bow.y = myGamePiece.y;
             //point towards mouse
             bow.angle = Math.atan2(-(myGamePiece.y - myGameArea.y), -(myGamePiece.x - myGameArea.x));
-            //if arrow not in flight, move  arrow to player and move with bow
+            //if 3arrow not in flight, move  arrow to player and move with bow
             if (!arrowinflight && arrows >= 1) {
                 arrow.x = myGamePiece.x;
                 arrow.y = myGamePiece.y;
@@ -627,6 +817,44 @@
                     arrow.update();
                 }
             }
+
+                for( var q = 0; q < enemies.length; q++){
+                if (enemies[q].kb > 0) {
+                        enemies[q].x += (1.1 ** enemies[q].kb) * 25/(1.1 ** 12) * enemies[q].kbd;
+                        enemies[q].kb -= 1;
+                        if(enemies[q].kb > 1){
+                        enemies[q].image.src = "enemydamaged.png";
+                        } else {
+                            enemies[q].image.src = "enemy.png";
+                        }
+                    }
+                    }
+                
+
+                for (var t = 0; t < enemies.length; t++){
+                    if (Math.abs(myGamePiece.x - enemies[t].x) <= 60 && Math.abs(myGamePiece.y - enemies[t].y) <= 60 && enemies[t].health > 0 && enemies[t].spawnroom == level && !invopen) {
+                    console.log("collision");
+                    if (myGamePiece.x >= enemies[t].x) {
+                        myGamePiece.kb = 12;
+                        myGamePiece.kbd = 1;
+
+
+                    } else {
+                        myGamePiece.kb = 12;
+                        myGamePiece.kbd = -1;
+                    }
+                    myGamePiece.health -= 1;
+                }
+                }
+
+                for (var p = 0; p < enemies.length; p++) {
+                    if (enemies[p].x >= 900) {
+                        enemies[p].x = 90;
+                    } else if (enemies[p].x <= 60) {
+                        enemies[p].x = 870;
+                    }
+                }
+
                             //SPACE pressed, use weapon      
                             if (myGameArea.keys && myGameArea.keys[32] && !invopen) {
                                 //sword
@@ -641,12 +869,45 @@
                                         if (sword.angle >= 0) {
                                             sword.angle = Math.PI / -2;
                                         }
+                                        for (var x = 0; x < enemies.length; x++) {
+                                            if (myGamePiece.x < enemies[x].x && myGamePiece.y >= enemies[x].y && Math.sqrt(((myGamePiece.x - enemies[x].x) ** 2) + ((myGamePiece.y - enemies[x].y) ** 2)) <= 150){
+                                                if(enemies[x].kb == 0){
+                                                    enemies[x].health -= sworddmgs[itemindex[1]];
+                                                }
+                                                enemies[x].kb = 12;
+                                                enemies[x].kbd = 1;
+                                                if (enemies[x].health == 0) {
+                                                    textpuff("killed enemy, +" + enemies[x].dropgold + " coins");
+                                                    setTimeout(textpuff,10000,"");
+                                                    coins += enemies[x].dropgold;
+                                                    enemies[x].dropgold = 0;
+                                                }
+                                                
+                                                console.log("WHACKY")
+                                            }
+                                        }
                                     }
                                    //if left swing left        
                                 if(myGamePiece.dir == "l"){
                                     sword.angle -= Math.PI/36;
                                         if (sword.angle <= -1*Math.PI) {
                                             sword.angle = Math.PI / -2;
+                                        }
+                                    for (var x = 0; x < enemies.length; x++) {
+                                            if (myGamePiece.x > enemies[x].x && myGamePiece.y >= enemies[x].y && Math.sqrt(((myGamePiece.x - enemies[x].x) ** 2) + ((myGamePiece.y - enemies[x].y) ** 2)) <= 150){
+                                                if (enemies[x].kb == 0) {
+                                                    enemies[x].health -= sworddmgs[itemindex[1]];
+                                                }
+                                                enemies[x].kb = 12;
+                                                enemies[x].kbd = -1;
+                                                console.log("WHACKY")
+                                                if (enemies[x].health == 0) {
+                                                    textpuff("killed enemy, +" + enemies[x].dropgold + " coins");
+                                                    setTimeout(textpuff,10000,"");
+                                                    coins += enemies[x].dropgold;
+                                                    enemies[x].dropgold = 0;
+                                                }
+                                            }
                                         }
                                     }
                                 sword.update();
@@ -676,13 +937,35 @@
                 arrowhits[0]= arrow.x;
                 arrowhits[1]= arrow.y;
                 arrowhits[2]= arrow.x - 75 * Math.sin(arrow.angle - Math.PI/2);
-                arrowhits[3]= arrow.y + 75 * Math.cos(arrow.angle - Math.PI/2);
+                arrowhits[3] = arrow.y + 75 * Math.cos(arrow.angle - Math.PI / 2);
+                for (var z = 0; z < enemies.length; z++) {
+                    if (arrowhits[3] >= enemies[z].y - 30 && arrowhits[2] <= enemies[z].x + 30 && arrowhits[2] >= enemies[z].x - 30 && enemies[z].x > 0) {
+                        enemies[z].health -= 3;
+                        enemies[z].kb = 12;
+                        if (arrow.x > enemies[z].x) {
+                            enemies[z].kbd = -1;
+                        } else {
+                            enemies[z].kbd = 1;
+                        }
+                        if (enemies[z].health <= 0) {
+                            textpuff("killed enemy, +" + enemies[z].dropgold + " coins");
+                            setTimeout(textpuff, 10000, "");
+                            coins += enemies[z].dropgold;
+                            enemies[z].dropgold = 0;
+                        }
+                        arrowinflight = false;
+                        
+                    }
+                    console.log(arrowhits[2],arrowhits[3],enemies[z].x,enemies[z].y)
+                }
                 console.log(arrowlaunchroom,level)
                 if (arrowhits[2] >= 898 || arrowhits[3] <= 62 || arrowhits[2] <= 62 || arrowhits[3] >= 478 || arrowlaunchroom != level) {
                     arrowinflight = false;
                 }
                 
-            }
+                }
+
+                
             //inventory open
             if (myGameArea.keys && (myGameArea.keys[114] || myGameArea.keys[82])) {
                 invopen = true;
@@ -726,6 +1009,7 @@
                 } 
                 cx.font = "100px Arial";
                 cx.fillText(coins, 562,80)
+                cx.fillText(myGamePiece.health,850,80)
                 cx.font = "20px Arial"
                 cx.fillText(equipped[0],685,165)
                 cx.fillText(equipped[1],685,235)

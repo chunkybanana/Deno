@@ -28,7 +28,7 @@
         var poop;
         
         function startGame() {
-     
+            
             myGameArea.start();
             myGamePiece = new component(30, 30, "red", 210, 200);
             myObstacle1 = new component(30, 30, "fireball.png", 0, 0, "image");
@@ -85,6 +85,7 @@
       ctx.fillRect(this.x, this.y, this.width, this.height);
     }
   }
+
 this.newPos = function () {
                 this.x += this.speedX;
                 this.y += this.speedY;
