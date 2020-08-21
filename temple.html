@@ -364,11 +364,11 @@
                 wallcollide(918,0,358);
                 platformcollide(898,960,338);
                 //background
-                bg("templeback.png");
+                bg("backgrounds/templeback.png");
                 //sign
                 if (myGamePiece.x >= 402 && myGamePiece.x <= 582 && myGamePiece.y >= 332) {
                    if (myGameArea.keys && (myGameArea.keys[101]||myGameArea.keys[69])) {
-                       bg("templeback1description.png");
+                       bg("backgrounds/templeback1description.png");
                        
                    }
                 } 
@@ -402,13 +402,13 @@
                 platformcollide(0,62,338);
                 
                 //background
-               bg("templeback2wb.png");
+               bg("backgrounds/templeback2wb.png");
                 
                 if(skyfallbeaten == true){
                     //allow movement left + show background
                  wallcollide(918,0,358);
                 platformcollide(898,960,338);
-                    bg("templeback2nowb.png");
+                    bg("backgrounds/templeback2nowb.png");
                 } else {
                     //one big wall left
                 wallcollide(918,0,540);
@@ -418,10 +418,10 @@
                    if (myGameArea.keys && (myGameArea.keys[101]||myGameArea.keys[69])) {
                        
                        if(skyfallbeaten == true){
-                           bg("templeback2nowbwd.png");
+                           bg("backgrounds/templeback2nowbwd.png");
                            
                        } else {
-                       bg("templeback2wd.png");
+                           bg("backgrounds/templeback2wd.png");
                        }
                    }
                 }
@@ -439,7 +439,7 @@
             //skyfall
             if (level == 2.5 && !invopen) {
                 //background
-                 bg("skyfallback.png");
+                bg("backgrounds/skyfallback.png");
                 //reset values
                 myGamePiece.speedX = 0;
             myGamePiece.speedY = 0;
@@ -581,11 +581,11 @@
                 wallcollide(918,0,358);
                 platformcollide(898,960,338);
                 //background
-                bg("level3chest.png")
+                bg("backgrounds/level3chest.png")
                 //sign
                if (myGamePiece.x >= 182 && myGamePiece.x <= 372 && myGamePiece.y >= 328) {
                    if (myGameArea.keys && (myGameArea.keys[101]||myGameArea.keys[69])) {
-                       bg("level3chest+d.png");
+                       bg("backgrounds/level3chest+d.png");
                    }
                 }
                 //chest      
@@ -636,7 +636,7 @@
                 wallcollide(918,0,358);
                 platformcollide(898,960,338);
                 //background
-                bg("l4.png");
+                bg("backgrounds/l4.png");
                 if(!invopen){
                 if(!l4){
                 enemies[0]= new component(60,60,"enemy.png",330,448,"image");
@@ -699,7 +699,7 @@
                 wallcollide(918, 0, 358);
                 platformcollide(898, 960, 338);
                 //background
-                bg("l4.png");
+                bg("backgrounds/l4.png");
                 if (!invopen) {
                     if (!l5) {
                         enemies[0] = new component(60, 60, "enemy.png", 330, 448, "image");
@@ -998,7 +998,7 @@
                     }
                 }
                 //background inventory
-                bg("inventory.png");
+                bg("backgrounds/inventory.png");
                 //set
                 var cx  = myGameArea.context;
                 cx.fillStyle = "white";
