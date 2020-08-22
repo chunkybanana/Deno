@@ -13,6 +13,7 @@
 <body onload="startGame()">
     <canvas id="canvas"></canvas>
     <button onclick="openFullscreen()">Fullscreen</button>
+    <p id="loading"></p>
     <script>
         //array prototype clear fuunction for arrays
 
@@ -121,13 +122,15 @@
             myGameArea.start();
 
         }
-
+        var percent;
         function drawallimgs() {
             for (var f = 0; f < all.length; f++) {
                 var k = new Image();
                 k.src = all[f];
+                document.getElementById("loading").innerHTML = "Loading... " + (((f + 1) / all.length)/100) + "% complete";
                 myGameArea.context.drawImage(k,10,10,10,10)
             }
+
         }
         //sort of global var: controls everything. 
         var myGameArea = {
@@ -714,8 +717,8 @@
                         enemies[0] = new component(60, 60, "imgs/playerandenemy/enemy.png", 330, 448, "image");
                         enemyhealth[0] = new component(60, 10, "imgs/health/fullhealth.png", 330, 408, "image");
                         enemies[0].speedX = 0;
-                        enemies[0].health = 300;
-                        enemies[0].origh = 300;
+                        enemies[0].health = 10;
+                        enemies[0].origh = 10;
                         enemies[0].dropgold = 5;
                         enemies[0].spawnroom = 5;
                     }
@@ -723,7 +726,7 @@
                         enemies[0].speedX = -4;
 
                     } else if (enemies[0].x <= 200) {
-                        enemies[0].speedX = 4;
+                        enemies[0].speedX = 4;       
                     }
 
 
