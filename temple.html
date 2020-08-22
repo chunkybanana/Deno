@@ -22,6 +22,8 @@
     this[i] = null;
   }
         };
+        var all = ["imgs/skyfall/fireball.png", "imgs/skyfall/coin.png", "imgs/playerandenemy/player.png", "imgs/playerandenemy/playerright.png", "imgs/playerandenemy/playerleft.png", "imgs/playerandenemy/playerdamaged.png", "imgs/playerandenemy/enemy.png", "imgs/playerandenemy/enemydamaged.png", "imgs/health/eighthhealth.png", "imgs/health/fiveeighthhealth.png", "imgs/health/threeeighthhealth.png", "imgs/health/seveneighthhealth.png", "imgs/health/quarterhealth.png", "imgs/health/threequarterhealth.png", "imgs/health/halfhealth.png", "imgs/health/fullhealth.png", "imgs/health/heart.png", "imgs/weapons/arrow.png", "imgs/weapons/woodensword.png", "imgs/weapons/stonesword.png", "imgs/weapons/woodenbow.png", "backgrounds/inventory.png", "backgrounds/l4.png", "backgrounds/level3chest+d.png", "backgrounds/templeback2wd.png", "backgrounds/templeback1description.png", "backgrounds/templeback2nowb.png", "backgrounds/templeback2nowbwd.png", "backgrounds/templeback2wb.png", "backgrounds/skyfallback.png", "backgrounds/level3chest.png", "backgrounds/templeback.png"];
+        
         var l4 = false;
         var l5 = false;
         //checks whehter inventory open
@@ -120,7 +122,13 @@
 
         }
 
-
+        function drawallimgs() {
+            for (var f = 0; f < all.length; f++) {
+                var k = new Image();
+                k.src = all[f];
+                myGameArea.context.drawImage(k,10,10,10,10)
+            }
+        }
         //sort of global var: controls everything. 
         var myGameArea = {
             //canvas
@@ -131,6 +139,7 @@
                 this.canvas.width = 960;
                 this.canvas.height = 540;
                 this.context = this.canvas.getContext("2d");
+                drawallimgs();
                 //update game
                 this.interval = setInterval(updateGameArea, 20);
                 //detect key press 
