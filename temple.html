@@ -359,11 +359,13 @@
             //physics mechanism for each level
             if (level == 1) {
                 //check keys l/r  
+
                 keycheck();
                 //jump
                 if (myGameArea.keys && myGameArea.keys[38]) {
                     //only if touching bottom
                     if (myGamePiece.y >= 448) {
+
                         //jump
                         accelerate(-5);
                     } else {
@@ -720,15 +722,15 @@
                 bg("backgrounds/l4.png");
                 if (!invopen) {
                     if (!l5) {
-                        enemies[0] = new component(60, 60, "imgs/playerandenemy/enemy.png", 660, 448, "image");
-                        enemyhealth[0] = new component(60, 10, "imgs/health/fullhealth.png", 660, 408, "image");
-                        enemydarts[0] = new component(150, 20, "imgs/weapons/dart.png", 660, 448, "image")
-                        enemies[0].speedX = 0;
-                        enemydarts[0].spawnroom = 5;
-                        enemies[0].health = 10;
-                        enemies[0].origh = 10;
-                        enemies[0].dropgold = 5;
-                        enemies[0].spawnroom = 5;
+                        enemies[1] = new component(60, 60, "imgs/playerandenemy/enemy.png", 660, 448, "image");
+                        enemyhealth[1] = new component(60, 10, "imgs/health/fullhealth.png", 660, 408, "image");
+                        enemydarts[1] = new component(150, 20, "imgs/weapons/dart.png", 660, 448, "image")
+                        enemies[1].speedX = 0;
+                        enemydarts[1].spawnroom = 5;
+                        enemies[1].health = 10;
+                        enemies[1].origh = 10;
+                        enemies[1].dropgold = 5;
+                        enemies[1].spawnroom = 5;
                     }
 
 
@@ -923,6 +925,8 @@
                                     }
                                     enemies[x].kb = 12;
                                     enemies[x].kbd = 1;
+                                    level -= 1;
+                                    level += 1;
                                     if (enemies[x].health == 0) {
                                         textpuff("killed enemy, +" + enemies[x].dropgold + " coins");
                                         setTimeout(textpuff, 10000, "");
@@ -945,6 +949,8 @@
                                     if (enemies[x].kb == 0) {
                                         enemies[x].health -= sworddmgs[itemindex[1]];
                                     }
+                                    level -= 1;
+                                    level += 1;
                                     enemies[x].kb = 12;
                                     enemies[x].kbd = -1;
                                     console.log("WHACKY")
