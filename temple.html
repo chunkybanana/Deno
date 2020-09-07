@@ -742,7 +742,9 @@
                         } else {
                             myGamePiece.image.src = "imgs/playerandenemy/player.png";
                         }
+
                     }
+
 
 
 
@@ -754,11 +756,13 @@
             for (var i = 0; i < enemies.length; i++) {
                 if (enemies[i].health > 0 && enemies[i].spawnroom == level) {
                     if (enemies[i].health <= enemies[i].origh / 8) {
+
                         enemyhealth[i].image.src = "imgs/health/eighthhealth.png";
                     }
                     if (enemies[i].health <= enemies[i].origh / 4 && enemies[i].health > enemies[i].origh / 8) {
                         enemyhealth[i].image.src = "imgs/health/quarterhealth.png";
                     }
+
                     if (enemies[i].health <= 3 * enemies[i].origh / 8 && enemies[i].health > enemies[i].origh / 4) {
                         enemyhealth[i].image.src = "imgs/health/threeeighthhealth.png";
                     }
